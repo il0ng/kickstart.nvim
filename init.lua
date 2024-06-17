@@ -102,7 +102,31 @@ vim.g.have_nerd_font = false
 vim.opt.number = true
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
--- vim.opt.relativenumber = true
+vim.opt.relativenumber = true
+
+vim.bo.tabstop = 4
+vim.bo.softtabstop = 4
+vim.bo.shiftwidth = 4
+vim.bo.expandtab = true
+vim.bo.smartindent = true
+
+vim.o.tabstop = 4
+vim.o.softtabstop = 4
+vim.o.shiftwidth = 4
+vim.o.expandtab = true
+vim.o.smartindent = true
+vim.o.wrap = false
+
+vim.o.swapfile = false
+vim.o.backup = false
+
+vim.o.incsearch = true
+
+vim.o.scrolloff = 8
+
+-- Disable swapfiles and backups
+vim.opt.swapfile = false
+vim.opt.backup = false
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
@@ -142,7 +166,7 @@ vim.opt.splitbelow = true
 -- Sets how neovim will display certain whitespace characters in the editor.
 --  See `:help 'list'`
 --  and `:help 'listchars'`
-vim.opt.list = true
+vim.opt.list = false
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
 -- Preview substitutions live, as you type!
@@ -353,12 +377,40 @@ require('lazy').setup({
         -- You can put your default mappings / updates / etc. in here
         --  All the info you're looking for is in `:help telescope.setup()`
         --
-        -- defaults = {
-        --   mappings = {
-        --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-        --   },
-        -- },
-        -- pickers = {}
+        defaults = {
+          layout_strategy = 'horizontal',
+          layout_config = {
+            horizontal = {
+              width = 0.9, -- Adjust the width of the Telescope window
+              height = 0.95, -- Adjust the height of the Telescope window
+              preview_width = 0.35, -- Set the width of the preview window
+            },
+            prompt_position = 'top', -- Position the search bar at the top
+          },
+          sorting_strategy = 'ascending', -- Display results in ascending order
+          prompt_prefix = '> ', -- Customize the prompt prefix
+          mappings = {
+            i = { -- Insert mode mappings
+              ['<C-d>'] = require('telescope.actions').preview_scrolling_down,
+              ['<C-u>'] = require('telescope.actions').preview_scrolling_up,
+            },
+            n = { -- Normal mode mappings
+              ['<C-d>'] = require('telescope.actions').preview_scrolling_down,
+              ['<C-u>'] = require('telescope.actions').preview_scrolling_up,
+            },
+          },
+        },
+        pickers = {
+          find_files = {
+            layout_strategy = 'horizontal',
+            layout_config = {
+              width = 0.9, -- Adjust the width of the find_files window
+              height = 0.95, -- Adjust the height of the find_files window
+              preview_width = 0.65, -- Set the width of the preview window
+              prompt_position = 'top', -- Position the search bar at the top
+            },
+          },
+        },
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
@@ -835,7 +887,7 @@ require('lazy').setup({
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'vim', 'vimdoc' },
+      ensure_installed = { 'bash', 'c', 'diff', 'go', 'html', 'javascript', 'lua', 'luadoc', 'markdown', 'php', 'vim', 'vimdoc' },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
@@ -885,7 +937,7 @@ require('lazy').setup({
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   --    For additional information, see `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
-  -- { import = 'custom.plugins' },
+  { import = 'custom.plugins' },
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
